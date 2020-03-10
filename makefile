@@ -3,7 +3,7 @@ CFLAGS=-Wall -Wextra -O2 -g
 
 all: test
 
-test: avl.o test.o
+test: test.o readline.o avl.o
 	$(CC) $(CFLAGS) $^ -o $@
 
 %.o: %.c
