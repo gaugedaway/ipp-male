@@ -2,21 +2,23 @@
 #define _AVL_H_
 
 
-typedef struct avl {
-    struct avl *c[2];
-    const char *str;
-    struct avl *val;
-    int h;
-} avl;
+typedef struct Node* AVLTree;
+
+typedef struct Node {
+    AVLTree children[2];
+    AVLTree val;
+    int height;
+    char *key;
+} Node;
 
 
-avl* avl_create(void);
-void avl_insert(avl **node_ptr, const char *str);
-void avl_delete(avl **node_ptr, const char *str);
-int avl_check(const avl *node, const char *str);
-avl** avl_get(avl *node, const char *str);
-void avl_free(avl *node);
-void avl_print(const avl *node, int indent);
+AVLTree avl_create(void);
+AVLTree* avl_insert(AVLTree *tree_ptr, const char *key);
+void avl_delete(AVLTree *tree_ptr, const char *key);
+int avl_check(const AVLTree tree, const char *key);
+AVLTree* avl_get_val(AVLTree tree, const char *key);
+void avl_free(AVLTree *tree_ptr);
+void avl_print(const AVLTree tree, int indent);
 
 
 #endif

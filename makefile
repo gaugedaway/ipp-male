@@ -1,9 +1,9 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -O2 -g
 
-all: test
+all: main
 
-test: test.o readline.o avl.o
+main: main.o readline.o avl.o
 	$(CC) $(CFLAGS) $^ -o $@
 
 %.o: %.c
