@@ -56,6 +56,7 @@ static inline void rot2(AVLTree *tree_ptr, int child) {
 // Balances the three using a suitable rotation on a tree pointed to by 'tree'.
 static void balance(AVLTree *tree_ptr) {
     AVLTree tree = *tree_ptr;
+    if(!tree) return;
 
     for (int child = 0; child <= 1; child++) {
         if (height(tree->children[child]) >
@@ -99,7 +100,7 @@ static inline AVLTree create_node(const char *key) {
 // you 'key' is a name of a forest end 'tree' points to the
 // tree representing the world, the return value is a pointer
 // to a tree representing that forest).
-AVLTree* avl_insert(AVLTree *tree_ptr, const char *key) {
+AVLTree *avl_insert(AVLTree *tree_ptr, const char *key) {
     AVLTree tree = *tree_ptr;
     AVLTree *res = NULL;
 
@@ -169,43 +170,51 @@ void avl_delete(AVLTree *tree_ptr, const char *key) {
             // If there is no right subtree, just replace the
             // root with it's left child.
             *tree_ptr = tree->children[0];
-        }
-        else {
+        } else {
             // Otherwise replace it with the smallest element
             // from the right subtree.
-            *tree_ptr = extract_min(&tree->children[1]);
+            AVLTree m = extract_min(&tree->children[1]);
+            m->children[0] = tree->children[0];
+            *tree_ptr = m;
         }
 
         avl_free(&tree->val);
         free(tree->key);
         free(tree);
-    }
-    else if (v < 0) {
+    } else if (v < 0) {
         avl_delete(&tree->children[0], key);
-    }
-    else {
+    } else {
         avl_delete(&tree->children[1], key);
     }
 
-    fix_height(*tree_ptr);
-    balance(tree_ptr);
+    if(*tree_ptr) {
+        fix_height(*tree_ptr);
+        balance(tree_ptr);
+    }
 }
 
 
 // Returns 1 if key 'key' is in the tree 'tree', 0 otherwise.
-int avl_check(const AVLTree tree, const char *key) {
+int avl_check(const AVLTree tree, char **keys, int num_keys) {
+    if (num_keys == 0) return 1;
     if (!tree) return 0;
-    int v = strcmp(key, tree->key);
-    if (v == 0) return 1;
-    if (v < 0) return avl_check(tree->children[0], key);
-    return avl_check(tree->children[1], key);
+    if (strcmp(keys[0], "*") != 0) {
+        int v = strcmp(keys[0], tree->key);
+        if (v == 0) return avl_check(tree->val, keys + 1, num_keys - 1);
+        if (v < 0) return avl_check(tree->children[0], keys, num_keys);
+        return avl_check(tree->children[1], keys, num_keys);
+    } else {
+        return avl_check(tree->val, keys + 1, num_keys - 1) ||
+               avl_check(tree->children[0], keys, num_keys) ||
+               avl_check(tree->children[1], keys, num_keys);
+    }
 }
 
 
 // Returns the pointer to the tree being the value corresponding
 // to the key 'key' (so just like avl_insert, but when the key
 // isn't found it returns NULL instead of inserting it).
-AVLTree* avl_get_val(AVLTree tree, const char *key) {
+AVLTree *avl_get_val(AVLTree tree, const char *key) {
     if (!tree) return NULL;
     int v = strcmp(key, tree->key);
     if (v == 0) return &tree->val;
@@ -214,12 +223,11 @@ AVLTree* avl_get_val(AVLTree tree, const char *key) {
 }
 
 
-void avl_print(const AVLTree tree, int s) {
+void avl_print(const AVLTree tree) {
     if (!tree) return;
-    avl_print(tree->children[1], s + 1);
-    for (int i = 0; i < s; i++) putchar(' ');
+    avl_print(tree->children[0]);
     puts(tree->key);
-    avl_print(tree->children[0], s + 1);
+    avl_print(tree->children[1]);
 }
 
 
