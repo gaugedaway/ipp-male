@@ -38,6 +38,7 @@ void cmd_del(Tree *world, char **args, int num_args) {
     if (num_args == 0)
         avl_free(world);
 
+    // find the tree from which the node should be deleted
     Tree *level = world;
     for (int i = 0; i < num_args - 1; i++) {
         level = avl_get_val(*level, args[i]);
@@ -55,6 +56,7 @@ void cmd_del(Tree *world, char **args, int num_args) {
 void cmd_print(Tree *world, char **args, int num_args) {
     Tree *level = world;
 
+    // find the tree to print
     for(int i = 0; i < num_args; i++) {
         level = avl_get_val(*level, args[i]);
         if(!level)

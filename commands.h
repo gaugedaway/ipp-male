@@ -13,13 +13,13 @@
 #include "avl.h"
 
 
-int cmd_add(Tree *world, char **args, int n);
+int cmd_add(Tree *world, char **args, int num_args);
 
-void cmd_del(Tree *world, char **args, int n);
+void cmd_del(Tree *world, char **args, int num_args);
 
-void cmd_print(Tree *world, char **args, int n);
+void cmd_print(Tree *world, char **args, int num_args);
 
-void cmd_check(Tree *world, char **args, int n);
+void cmd_check(Tree *world, char **args, int num_args);
 
 
 #endif
