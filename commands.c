@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "commands.h"
 
+
 int cmd_add(Tree *world, char **args, int n) {
     Tree *level = world;
     for (int i = 0; i < n; i++)

@@ -47,12 +47,14 @@ int read_line(char **buf, int *buf_size, int *length) {
         if (position == *buf_size) {
             *buf_size *= 2;
             *buf = realloc(*buf, *buf_size);
+            if(!(*buf))
+                return -1;
         }
     }
 
     (*buf)[position] = '\0';
     *length = position;
-    return c == '\n' ? 0 : 1;
+    return c == EOF;
 }
 
 
