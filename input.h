@@ -7,8 +7,8 @@
  */
 
 
-#ifndef _READING_H_
-#define _READING_H_
+#ifndef _INPUT_H_
+#define _INPUT_H_
 
 #include <string.h>
 #include <stdlib.h>
