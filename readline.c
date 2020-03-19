@@ -77,7 +77,8 @@ int split_line(char *str, int len, char **words) {
         if(pos < len && !WHITESPACE(str[pos]))
             return -1;
 
-        str[pos++] = '\0';
+        if(pos < len)
+            str[pos++] = '\0';
 
         while (WHITESPACE(str[pos]))
             pos++;
