@@ -14,19 +14,18 @@ do
     if diff test.out ${f%.in}.out > /dev/null && diff test.err ${f%.in}.err > /dev/null
     then
 	echo "[OK] Correct output"
-	rm test.out test.err
     else
-	echo "[ERROR] Incorrect output; output saved in test.out and test.err"
+	echo "[ERROR] Incorrect output"
     fi
 
 
-#    if valgrind $VALGRIND_ARGS ./$1 < $f > valgrind.out 2>&1
-#    then
-#	echo "[OK] No memory problems"
-#	rm valgrind.out
-#    else
-#	echo "[ERROR] Valgrind found memory problems; output saved in valgrind.out"
-#    fi
+    if valgrind $VALGRIND_ARGS ./$1 < $f > valgrind.out 2>&1
+    then
+	echo "[OK] No memory problems"
+    else
+	echo "[ERROR] Valgrind found memory problems"
+    fi
 
+    rm test.out test.err valgrind.out
     echo
 done
