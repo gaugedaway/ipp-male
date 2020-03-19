@@ -1,13 +1,14 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -O2 -g
+CFLAGS=-Wall -Wextra -std=c11 -O2
 
-all: main
+all: forests
 
-main: main.o readline.o avl.o commands.o
-	$(CC) $(CFLAGS) $^ -o $@
+forests: main.o readline.o avl.o commands.o
+	$(CC) $^ -o $@
 
 %.o: %.c
 	$(CC) -c $(CFLAGS) $^ -o $@
 
 clean:
+	rm forests
 	rm *.o
