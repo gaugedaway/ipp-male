@@ -8,7 +8,7 @@
 #include "avl.h"
 
 
-void cmd_add(Tree *world, char **args, int n);
+int cmd_add(Tree *world, char **args, int n);
 
 void cmd_del(Tree *world, char **args, int n);
 

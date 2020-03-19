@@ -29,8 +29,9 @@ const int MAX_NUM_WORDS = 4;
  * When needed, it dynamically reallocates the buffer with twice
  * its previous size, so that even in case of very long lines
  * it runs in O(nlogn), where n is the length of the line.
- * It returns 0 if the line was terminated by '\n' and 1
- * if it was terminated by End Of File.
+ * It returns 0 if the line was terminated by '\n', 1
+ * if it was terminated by End Of File, and -1 if it couldn't
+ * allocate needed memory.
  */
 int read_line(char **buf, int *buf_size, int *length) {
     int position = 0;

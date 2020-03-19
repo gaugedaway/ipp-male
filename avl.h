@@ -23,7 +23,7 @@ typedef struct Node {
 
 Tree avl_create(void);
 
-Tree *avl_insert(Tree *tree_ptr, const char *key);
+int avl_insert(Tree *tree_ptr, const char *key, Tree **result_tree);
 
 void avl_delete(Tree *tree_ptr, const char *key);
 

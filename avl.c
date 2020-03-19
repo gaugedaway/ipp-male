@@ -108,15 +108,21 @@ static void balance(Tree *tree_ptr) {
 
 /*
  * Creates a new node with a key [key] and returns a pointer
- * to it (a one-element tree).
+ * to it (a one-element tree). If it can't allocate memory,
+ * it returns NULL.
  */
 static inline Tree create_node(const char *key) {
     Tree result = malloc(sizeof(Node));
+    if(!result)
+        return NULL;
 
     result->children[0] = result->children[1] = NULL;
     result->height = 1;
 
     result->key = malloc(strlen(key) + 1);
+    if(!result->key)
+        return NULL;
+
     strcpy(result->key, key);
 
     result->val = avl_create();
@@ -129,33 +135,38 @@ static inline Tree create_node(const char *key) {
  * Searches for a node with key [key] in the tree
  * pointed to by [tree_ptr]. If such a node doesn't exist
  * it creates it and inserts it into the tree.
- * Returns the pointer to a tree being a value corresponding
- * to the key [key] in the resulting tree. (For example if
+ * Puts the pointer to a tree being a value corresponding
+ * to the key [key] in [*result_tree]. (For example if
  * your [key] is a name of a forest and [tree] points to the
  * tree representing the world, the return value is a pointer
  * to a tree representing that forest).
  */
-Tree *avl_insert(Tree *tree_ptr, const char *key) {
+int avl_insert(Tree *tree_ptr, const char *key, Tree **result_tree) {
     Tree tree = *tree_ptr;
-    Tree *result = NULL;
 
     if (!tree) {
         *tree_ptr = create_node(key);
-        return &(*tree_ptr)->val;
+        if(!(*tree_ptr))
+            return -1;
+
+        *result_tree = &(*tree_ptr)->val;
+        return 0;
     }
+
+    int return_val = 0;
 
     int compare_result = strcmp(key, tree->key);
     if (compare_result == 0)
-        result = &tree->val;
+        *result_tree = &tree->val;
     else if (compare_result < 0)
-        result = avl_insert(&tree->children[0], key);
+        return_val = avl_insert(&tree->children[0], key, result_tree);
     else
-        result = avl_insert(&tree->children[1], key);
+        return_val = avl_insert(&tree->children[1], key, result_tree);
 
     fix_height(tree);
     balance(tree_ptr);
 
-    return result;
+    return return_val;
 }
 
 

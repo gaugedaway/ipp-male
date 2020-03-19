@@ -9,11 +9,14 @@
 #include <stdlib.h>
 #include "commands.h"
 
-void cmd_add(Tree *world, char **args, int n) {
+int cmd_add(Tree *world, char **args, int n) {
     Tree *level = world;
     for (int i = 0; i < n; i++)
-        level = avl_insert(level, args[i]);
+        if (avl_insert(level, args[i], &level) == -1)
+            return -1;
+
     puts("OK");
+    return 0;
 }
 
 void cmd_del(Tree *world, char **args, int n) {
