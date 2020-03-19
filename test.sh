@@ -17,18 +17,16 @@ do
 	rm test.out test.err
     else
 	echo "[ERROR] Incorrect output; output saved in test.out and test.err"
-	break
     fi
 
 
-    if valgrind $VALGRIND_ARGS ./$1 < $f > valgrind.out 2>&1
-    then
-	echo "[OK] No memory problems"
-	rm valgrind.out
-    else
-	echo "[ERROR] Valgrind found memory problems; output saved in valgrind.out"
-	break
-    fi
+#    if valgrind $VALGRIND_ARGS ./$1 < $f > valgrind.out 2>&1
+#    then
+#	echo "[OK] No memory problems"
+#	rm valgrind.out
+#    else
+#	echo "[ERROR] Valgrind found memory problems; output saved in valgrind.out"
+#    fi
 
     echo
 done

@@ -19,13 +19,14 @@ const int MAX_NUM_WORDS = 4;
 
 /*
  * Reads a single line into the buffer (char*) *buf
+ * Sets *len to length of the line (without newline).
  * When needed, it dynamically reallocates the buffer with twice
  * its previous size, so that even in case of very long lines
  * it runs in O(nlogn), where n is the length of the line.
  * It returns 0 if the line was terminated by '\n' and 1
  * if it was terminated by End Of File.
  */
-int read_line(char **buf, int *buf_size) {
+int read_line(char **buf, int *buf_size, int *len) {
     int pos = 0;
     char c = 0;
 
@@ -43,6 +44,7 @@ int read_line(char **buf, int *buf_size) {
     }
 
     (*buf)[pos] = '\0';
+    *len = pos;
     return c == '\n' ? 0 : 1;
 }
 
@@ -50,7 +52,8 @@ int read_line(char **buf, int *buf_size) {
 /*
  * Splits a single string 'str' into separate words (chunks of characters
  * satisfying NAME_CHAR(c)), separated by whitespace (characters satisfying
- * WHITESPACE(c)).
+ * WHITESPACE(c)). 'len' should be length str (the unparsed string can contain
+ * '\0' inside, so the actual length needs to be provided separately).
  * It doesn't actually copy the words, rather it places '\0' after them
  * and saves pointers to their beginning in the table 'words' (in other words
  * it uses the original string as a memory to store them).
@@ -59,20 +62,29 @@ int read_line(char **buf, int *buf_size) {
  * either NAME_CHAR(c) or WHITESPACE(c), or if the number of words exceeds
  * MAX_NUM_WORDS, it returns -1. Otherwise it returns the number of words.
  */
-int split_line(char *str, char **words) {
+int split_line(char *str, int len, char **words) {
     int n = 0;
     int pos = 0;
-    while (n < MAX_NUM_WORDS && str[pos] != '\0') {
-        while (WHITESPACE(str[pos])) pos++;
-        if (str[pos] == '\0') break;
 
+    while (WHITESPACE(str[pos]))
+        pos++;
+
+    while (n < MAX_NUM_WORDS && pos < len) {
         words[n++] = str + pos;
-        while (NAME_CHAR(str[pos])) pos++;
-        if (str[pos] == '\0') break;
+        while (NAME_CHAR(str[pos]))
+            pos++;
+
+        if(pos < len && !WHITESPACE(str[pos]))
+            return -1;
+
         str[pos++] = '\0';
+
+        while (WHITESPACE(str[pos]))
+            pos++;
     }
 
-    while (WHITESPACE(str[pos])) pos++;
-    if (str[pos] != '\0') return -1;
+    if (pos < len)
+        return -1;
+
     return n;
 }

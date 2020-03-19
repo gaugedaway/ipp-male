@@ -8,8 +8,8 @@
 #include "commands.h"
 #include "avl.h"
 
-int read_line(char **buf, int *buf_size);
+int read_line(char **buf, int *buf_size, int *len);
 
-int split_line(char *str, char **words);
+int split_line(char *str, int len, char **words);
 
 #endif

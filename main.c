@@ -10,13 +10,14 @@ const int INIT_BUFFER_SIZE = 1024;
 
 
 int process_line(AVLTree *world, char **buf, int *buf_size) {
-    int eof = read_line(buf, buf_size);
+    int len;
+    int eof = read_line(buf, buf_size, &len);
 
     if ((*buf)[0] == '#')
         return eof;
 
     char *words[4];
-    int n = split_line(*buf, words);
+    int n = split_line(*buf, len, words);
 
     if (n == 0)
         return eof;
@@ -51,4 +52,6 @@ int main(void) {
 
     free(buf);
     avl_free(&world);
+
+    return 0;
 }

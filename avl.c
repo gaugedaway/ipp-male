@@ -175,6 +175,7 @@ void avl_delete(AVLTree *tree_ptr, const char *key) {
             // from the right subtree.
             AVLTree m = extract_min(&tree->children[1]);
             m->children[0] = tree->children[0];
+            m->children[1] = tree->children[1];
             *tree_ptr = m;
         }
 

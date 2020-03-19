@@ -10,53 +10,40 @@
 #include "commands.h"
 
 void cmd_add(AVLTree *world, char **args, int n) {
-    AVLTree *forest = avl_insert(world, args[0]);
-    if (n >= 2) {
-        AVLTree *tree = avl_insert(forest, args[1]);
-        if (n == 3) {
-            avl_insert(tree, args[2]);
-        }
-    }
-
+    AVLTree *level = world;
+    for (int i = 0; i < n; i++)
+        level = avl_insert(level, args[i]);
     puts("OK");
 }
 
 void cmd_del(AVLTree *world, char **args, int n) {
     if (n == 0) {
         avl_free(world);
-    } else if (n == 1) {
-        avl_delete(world, args[0]);
-    } else {
-        AVLTree *forest = avl_get_val(*world, args[0]);
-        if (forest) {
-            if (n == 2) {
-                avl_delete(forest, args[1]);
-            }
-            else {
-                AVLTree *tree = avl_get_val(*forest, args[1]);
-                if (tree)
-                    avl_delete(tree, args[2]);
-            }
-        }
     }
+
+    AVLTree *level = world;
+    for (int i = 0; i < n - 1; i++) {
+        level = avl_get_val(*level, args[i]);
+        if (!level)
+            break;
+    }
+
+    if (level)
+        avl_delete(level, args[n - 1]);
 
     puts("OK");
 }
 
 void cmd_print(AVLTree *world, char **args, int n) {
-    if (n == 0) {
-        avl_print(*world);
-    } else {
-        AVLTree *forest = avl_get_val(*world, args[0]);
-        if (!forest) return;
-        if (n == 1) {
-            avl_print(*forest);
-        } else {
-            AVLTree *tree = avl_get_val(*forest, args[1]);
-            if (!tree) return;
-            avl_print(*tree);
-        }
+    AVLTree *level = world;
+
+    for(int i = 0; i < n; i++) {
+        level = avl_get_val(*level, args[i]);
+        if(!level)
+            return;
     }
+
+    avl_print(*level);
 }
 
 void cmd_check(AVLTree *world, char **args, int n) {
