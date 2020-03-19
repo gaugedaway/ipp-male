@@ -1,6 +1,6 @@
 /*
  * Author: Adam Bac
- * File: input.h
+ * File: input.c
  *
  * Implements reading lines of arbitrary size from stdin
  * and parsing raw input lines.
