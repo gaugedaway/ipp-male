@@ -8,13 +8,13 @@
 #include "avl.h"
 
 
-void cmd_add(AVLTree *world, char **args, int n);
+void cmd_add(Tree *world, char **args, int n);
 
-void cmd_del(AVLTree *world, char **args, int n);
+void cmd_del(Tree *world, char **args, int n);
 
-void cmd_print(AVLTree *world, char **args, int n);
+void cmd_print(Tree *world, char **args, int n);
 
-void cmd_check(AVLTree *world, char **args, int n);
+void cmd_check(Tree *world, char **args, int n);
 
 
 #endif //MALE_COMMANDS_H

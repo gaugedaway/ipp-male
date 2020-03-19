@@ -9,19 +9,19 @@
 #include <stdlib.h>
 #include "commands.h"
 
-void cmd_add(AVLTree *world, char **args, int n) {
-    AVLTree *level = world;
+void cmd_add(Tree *world, char **args, int n) {
+    Tree *level = world;
     for (int i = 0; i < n; i++)
         level = avl_insert(level, args[i]);
     puts("OK");
 }
 
-void cmd_del(AVLTree *world, char **args, int n) {
+void cmd_del(Tree *world, char **args, int n) {
     if (n == 0) {
         avl_free(world);
     }
 
-    AVLTree *level = world;
+    Tree *level = world;
     for (int i = 0; i < n - 1; i++) {
         level = avl_get_val(*level, args[i]);
         if (!level)
@@ -34,8 +34,8 @@ void cmd_del(AVLTree *world, char **args, int n) {
     puts("OK");
 }
 
-void cmd_print(AVLTree *world, char **args, int n) {
-    AVLTree *level = world;
+void cmd_print(Tree *world, char **args, int n) {
+    Tree *level = world;
 
     for(int i = 0; i < n; i++) {
         level = avl_get_val(*level, args[i]);
@@ -46,7 +46,7 @@ void cmd_print(AVLTree *world, char **args, int n) {
     avl_print(*level);
 }
 
-void cmd_check(AVLTree *world, char **args, int n) {
+void cmd_check(Tree *world, char **args, int n) {
     if (strcmp(args[n - 1], "*") == 0) {
         fputs("ERROR\n", stderr);
         return;

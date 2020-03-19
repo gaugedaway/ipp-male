@@ -9,7 +9,7 @@
 const int INIT_BUFFER_SIZE = 1024;
 
 
-int process_line(AVLTree *world, char **buf, int *buf_size) {
+int process_line(Tree *world, char **buf, int *buf_size) {
     int len;
     int eof = read_line(buf, buf_size, &len);
 
@@ -46,7 +46,7 @@ int main(void) {
     char *buf = malloc(INIT_BUFFER_SIZE);
     int buf_size = INIT_BUFFER_SIZE;
 
-    AVLTree world = avl_create();
+    Tree world = avl_create();
 
     while (!process_line(&world, &buf, &buf_size));
 

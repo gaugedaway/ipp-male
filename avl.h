@@ -1,30 +1,39 @@
+/*
+ * Author: Adam Bac
+ * File: avl.h
+ *
+ * Implements a dictionary with strings as keys and other
+ * dictionaries as values using AVL tree.
+ */
+
+
 #ifndef _AVL_H_
 #define _AVL_H_
 
 
-typedef struct Node *AVLTree;
+typedef struct Node *Tree;
 
 typedef struct Node {
-    AVLTree children[2];
-    AVLTree val;
+    Tree children[2];
+    Tree val;
     int height;
     char *key;
 } Node;
 
 
-AVLTree avl_create(void);
+Tree avl_create(void);
 
-AVLTree *avl_insert(AVLTree *tree_ptr, const char *key);
+Tree *avl_insert(Tree *tree_ptr, const char *key);
 
-void avl_delete(AVLTree *tree_ptr, const char *key);
+void avl_delete(Tree *tree_ptr, const char *key);
 
-int avl_check(const AVLTree tree, char **keys, int num_keys);
+int avl_check(const Tree tree, char **keys, int num_keys);
 
-AVLTree *avl_get_val(AVLTree tree, const char *key);
+Tree *avl_get_val(Tree tree, const char *key);
 
-void avl_free(AVLTree *tree_ptr);
+void avl_free(Tree *tree_ptr);
 
-void avl_print(const AVLTree tree);
+void avl_print(const Tree tree);
 
 
 #endif
