@@ -11,7 +11,8 @@ do
 
     ./$1 < $f > test.out 2> test.err
 
-    if diff test.out ${f%.in}.out > /dev/null && diff test.err ${f%.in}.err > /dev/null
+    if diff test.out ${f%.in}.out \
+	    > /dev/null && diff test.err ${f%.in}.err > /dev/null
     then
 	echo "[OK] Correct output"
     else
