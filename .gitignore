@@ -1,2 +1,6 @@
 *.o
-test
+.*
+/main
+/cmake-build-debug/
+/example/
+/ipp-2020-testy/
