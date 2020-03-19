@@ -4,4 +4,4 @@ cmake_minimum_required(VERSION 3.10)
 project(Male)
 
 # add the executable
-add_executable(main main.c avl.c readline.c commands.c)
+add_executable(main main.c avl.c input.c commands.c)

@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "avl.h"
-#include "readline.h"
+#include "input.h"
 #include "commands.h"
 
 

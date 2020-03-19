@@ -2,7 +2,7 @@
 // Created by tux on 3/17/20.
 //
 
-#include "readline.h"
+#include "input.h"
 #include "avl.h"
 #include <string.h>
 #include <stdio.h>
