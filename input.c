@@ -6,22 +6,19 @@
  * and parsing raw input lines.
  */
 
-
-#include <stdlib.h>
-#include <stdio.h>
 #include "input.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-
-#define WHITESPACE(c) ((c) == 32 || (c) == 9 || (c) == 11 || (c) == 12 || (c) == 13)
-#define NAME_CHAR(c) ((unsigned char) (c) >= 33)
-
+#define WHITESPACE(c) \
+    ((c) == 32 || (c) == 9 || (c) == 11 || (c) == 12 || (c) == 13)
+#define NAME_CHAR(c) ((unsigned char)(c) >= 33)
 
 /*
  * Maximum number of words (chunks of characters satisfying
  * NAME_CHAR(c)) to be processed by split_line, before signalling an error.
  */
 const int MAX_NUM_WORDS = 4;
-
 
 /*
  * Reads a single line into the buffer (char*) [*buf]
@@ -47,7 +44,7 @@ int read_line(char **buf, int *buf_size, int *length) {
         if (position == *buf_size) {
             *buf_size *= 2;
             *buf = realloc(*buf, *buf_size);
-            if(!(*buf))
+            if (!(*buf))
                 return -1;
         }
     }
@@ -56,7 +53,6 @@ int read_line(char **buf, int *buf_size, int *length) {
     *length = position;
     return c == EOF;
 }
-
 
 /*
  * Splits a single string [str] into separate words (chunks of characters

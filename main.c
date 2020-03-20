@@ -5,18 +5,15 @@
  * Initialisation and the main loop of the program.
  */
 
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 #include "avl.h"
-#include "input.h"
 #include "commands.h"
-
+#include "input.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 // Initial size of the buffer to which the lines are being read.
 const int INIT_BUFFER_SIZE = 1024;
-
 
 /*
  * Processes one line of the input. Arguments: a pointer to
@@ -72,11 +69,10 @@ int process_line(Tree *world, char **buf, int *buf_size) {
     return read_line_result;
 }
 
-
 int main(void) {
     int buf_size = INIT_BUFFER_SIZE;
     char *buf = malloc(INIT_BUFFER_SIZE);
-    if(!buf)
+    if (!buf)
         return 1;
 
     Tree world = avl_create();
@@ -90,7 +86,7 @@ int main(void) {
     avl_free(&world);
 
     // check if allocation problems occured
-    if(result == -1)
+    if (result == -1)
         return 1;
 
     return 0;

@@ -6,12 +6,10 @@
  * ADD, DEL, PRINT and CHECK.
  */
 
-
-#include <string.h>
-#include <stdio.h>
-#include "avl.h"
 #include "commands.h"
-
+#include "avl.h"
+#include <stdio.h>
+#include <string.h>
 
 /*
  * All four functions take three arguments:
@@ -33,7 +31,6 @@ int cmd_add(Tree *world, char **args, int num_args) {
     return 0;
 }
 
-
 void cmd_del(Tree *world, char **args, int num_args) {
     if (num_args == 0)
         avl_free(world);
@@ -52,20 +49,18 @@ void cmd_del(Tree *world, char **args, int num_args) {
     puts("OK");
 }
 
-
 void cmd_print(Tree *world, char **args, int num_args) {
     Tree *level = world;
 
     // find the tree to print
-    for(int i = 0; i < num_args; i++) {
+    for (int i = 0; i < num_args; i++) {
         level = avl_get_val(*level, args[i]);
-        if(!level)
+        if (!level)
             return;
     }
 
     avl_print(*level);
 }
-
 
 void cmd_check(Tree *world, char **args, int num_args) {
     // check if the last argument isn't '*'
